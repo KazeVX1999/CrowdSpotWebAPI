@@ -1,0 +1,638 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_1919280_crowdspotdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="authenticateLoginTable">
+          <Key>
+            <PropertyRef Name="authenticationID" />
+          </Key>
+          <Property Name="authenticationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="authenticationCode" Type="varchar(max)" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="dateAuthenticated" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cameraMarksCoordinates">
+          <Key>
+            <PropertyRef Name="cordID" />
+          </Key>
+          <Property Name="cordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cameraID" Type="int" Nullable="false" />
+          <Property Name="cordXStart" Type="int" Nullable="false" />
+          <Property Name="cordYStart" Type="int" Nullable="false" />
+          <Property Name="cordXEnd" Type="int" Nullable="false" />
+          <Property Name="cordYEnd" Type="int" Nullable="false" />
+          <Property Name="markType" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cameraStreamTable">
+          <Key>
+            <PropertyRef Name="cameraStreamImageID" />
+          </Key>
+          <Property Name="cameraStreamImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cameraID" Type="int" Nullable="false" />
+          <Property Name="imageEncoded" Type="varbinary(max)" Nullable="false" />
+          <Property Name="timeStreamed" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="recordPeopleCountTable">
+          <Key>
+            <PropertyRef Name="recordID" />
+          </Key>
+          <Property Name="recordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="locationID" Type="int" Nullable="false" />
+          <Property Name="PeopleCount" Type="int" Nullable="false" />
+          <Property Name="timeRecorded" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="resetPasswordTable">
+          <Key>
+            <PropertyRef Name="resetRequestID" />
+          </Key>
+          <Property Name="resetRequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="resetCode" Type="varchar(max)" Nullable="false" />
+          <Property Name="dateTimeRequested" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tempUserTable">
+          <Key>
+            <PropertyRef Name="registrationID" />
+          </Key>
+          <Property Name="registrationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userEmail" Type="varchar(max)" Nullable="false" />
+          <Property Name="userPassword" Type="varchar(max)" Nullable="false" />
+          <Property Name="validationCode" Type="varchar(max)" Nullable="false" />
+          <Property Name="submittedTime" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userCameraTable">
+          <Key>
+            <PropertyRef Name="cameraID" />
+          </Key>
+          <Property Name="cameraID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cameraName" Type="varchar(max)" Nullable="false" />
+          <Property Name="cameraDescription" Type="varchar(max)" />
+          <Property Name="locationID" Type="int" Nullable="false" />
+          <Property Name="cameraCode" Type="varchar(max)" Nullable="false" />
+          <Property Name="operationStatus" Type="int" Nullable="false" />
+          <Property Name="operatingStatus" Type="int" Nullable="false" />
+          <Property Name="streamStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userLocationSurveillanceTable">
+          <Key>
+            <PropertyRef Name="locationID" />
+          </Key>
+          <Property Name="locationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="locationName" Type="varchar(max)" Nullable="false" />
+          <Property Name="locationDescription" Type="varchar(max)" />
+          <Property Name="CurrentPeopleCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userTable">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userEmail" Type="varchar(max)" Nullable="false" />
+          <Property Name="userPassword" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webStreamSignalTable">
+          <Key>
+            <PropertyRef Name="signalID" />
+          </Key>
+          <Property Name="signalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cameraID" Type="int" Nullable="false" />
+          <Property Name="timeSignaled" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__authentic__userI__5DCAEF64">
+          <End Role="userTable" Type="Self.userTable" Multiplicity="1" />
+          <End Role="authenticateLoginTable" Type="Self.authenticateLoginTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="authenticateLoginTable">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cameraMar__camer__571DF1D5">
+          <End Role="userCameraTable" Type="Self.userCameraTable" Multiplicity="1" />
+          <End Role="cameraMarksCoordinates" Type="Self.cameraMarksCoordinates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userCameraTable">
+              <PropertyRef Name="cameraID" />
+            </Principal>
+            <Dependent Role="cameraMarksCoordinates">
+              <PropertyRef Name="cameraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cameraStr__camer__66603565">
+          <End Role="userCameraTable" Type="Self.userCameraTable" Multiplicity="1" />
+          <End Role="cameraStreamTable" Type="Self.cameraStreamTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userCameraTable">
+              <PropertyRef Name="cameraID" />
+            </Principal>
+            <Dependent Role="cameraStreamTable">
+              <PropertyRef Name="cameraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__recordPeo__locat__6D0D32F4">
+          <End Role="userLocationSurveillanceTable" Type="Self.userLocationSurveillanceTable" Multiplicity="1" />
+          <End Role="recordPeopleCountTable" Type="Self.recordPeopleCountTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userLocationSurveillanceTable">
+              <PropertyRef Name="locationID" />
+            </Principal>
+            <Dependent Role="recordPeopleCountTable">
+              <PropertyRef Name="locationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__resetPass__userI__619B8048">
+          <End Role="userTable" Type="Self.userTable" Multiplicity="1" />
+          <End Role="resetPasswordTable" Type="Self.resetPasswordTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="resetPasswordTable">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__userCamer__locat__46E78A0C">
+          <End Role="userLocationSurveillanceTable" Type="Self.userLocationSurveillanceTable" Multiplicity="1" />
+          <End Role="userCameraTable" Type="Self.userCameraTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userLocationSurveillanceTable">
+              <PropertyRef Name="locationID" />
+            </Principal>
+            <Dependent Role="userCameraTable">
+              <PropertyRef Name="locationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__userLocat__userI__440B1D61">
+          <End Role="userTable" Type="Self.userTable" Multiplicity="1" />
+          <End Role="userLocationSurveillanceTable" Type="Self.userLocationSurveillanceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userLocationSurveillanceTable">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__webStream__camer__693CA210">
+          <End Role="userCameraTable" Type="Self.userCameraTable" Multiplicity="1" />
+          <End Role="webStreamSignalTable" Type="Self.webStreamSignalTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userCameraTable">
+              <PropertyRef Name="cameraID" />
+            </Principal>
+            <Dependent Role="webStreamSignalTable">
+              <PropertyRef Name="cameraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_1919280_crowdspotdbModelStoreContainer">
+          <EntitySet Name="authenticateLoginTable" EntityType="Self.authenticateLoginTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cameraMarksCoordinates" EntityType="Self.cameraMarksCoordinates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cameraStreamTable" EntityType="Self.cameraStreamTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recordPeopleCountTable" EntityType="Self.recordPeopleCountTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="resetPasswordTable" EntityType="Self.resetPasswordTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tempUserTable" EntityType="Self.tempUserTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userCameraTable" EntityType="Self.userCameraTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userLocationSurveillanceTable" EntityType="Self.userLocationSurveillanceTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userTable" EntityType="Self.userTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webStreamSignalTable" EntityType="Self.webStreamSignalTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__authentic__userI__5DCAEF64" Association="Self.FK__authentic__userI__5DCAEF64">
+            <End Role="userTable" EntitySet="userTable" />
+            <End Role="authenticateLoginTable" EntitySet="authenticateLoginTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cameraMar__camer__571DF1D5" Association="Self.FK__cameraMar__camer__571DF1D5">
+            <End Role="userCameraTable" EntitySet="userCameraTable" />
+            <End Role="cameraMarksCoordinates" EntitySet="cameraMarksCoordinates" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cameraStr__camer__66603565" Association="Self.FK__cameraStr__camer__66603565">
+            <End Role="userCameraTable" EntitySet="userCameraTable" />
+            <End Role="cameraStreamTable" EntitySet="cameraStreamTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__recordPeo__locat__6D0D32F4" Association="Self.FK__recordPeo__locat__6D0D32F4">
+            <End Role="userLocationSurveillanceTable" EntitySet="userLocationSurveillanceTable" />
+            <End Role="recordPeopleCountTable" EntitySet="recordPeopleCountTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__resetPass__userI__619B8048" Association="Self.FK__resetPass__userI__619B8048">
+            <End Role="userTable" EntitySet="userTable" />
+            <End Role="resetPasswordTable" EntitySet="resetPasswordTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__userCamer__locat__46E78A0C" Association="Self.FK__userCamer__locat__46E78A0C">
+            <End Role="userLocationSurveillanceTable" EntitySet="userLocationSurveillanceTable" />
+            <End Role="userCameraTable" EntitySet="userCameraTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__userLocat__userI__440B1D61" Association="Self.FK__userLocat__userI__440B1D61">
+            <End Role="userTable" EntitySet="userTable" />
+            <End Role="userLocationSurveillanceTable" EntitySet="userLocationSurveillanceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__webStream__camer__693CA210" Association="Self.FK__webStream__camer__693CA210">
+            <End Role="userCameraTable" EntitySet="userCameraTable" />
+            <End Role="webStreamSignalTable" EntitySet="webStreamSignalTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_1919280_crowdspotdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="authenticateLoginTable">
+          <Key>
+            <PropertyRef Name="authenticationID" />
+          </Key>
+          <Property Name="authenticationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="authenticationCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="dateAuthenticated" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="userTable" Relationship="Self.FK__authentic__userI__3C69FB99" FromRole="authenticateLoginTable" ToRole="userTable" />
+        </EntityType>
+        <EntityType Name="cameraMarksCoordinate">
+          <Key>
+            <PropertyRef Name="cordID" />
+          </Key>
+          <Property Name="cordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cameraID" Type="Int32" Nullable="false" />
+          <Property Name="cordXStart" Type="Int32" Nullable="false" />
+          <Property Name="cordYStart" Type="Int32" Nullable="false" />
+          <Property Name="cordXEnd" Type="Int32" Nullable="false" />
+          <Property Name="cordYEnd" Type="Int32" Nullable="false" />
+          <Property Name="markType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="userCameraTable" Relationship="Self.FK__cameraMar__camer__571DF1D5" FromRole="cameraMarksCoordinates" ToRole="userCameraTable" />
+        </EntityType>
+        <EntityType Name="cameraStreamTable">
+          <Key>
+            <PropertyRef Name="cameraStreamImageID" />
+          </Key>
+          <Property Name="cameraStreamImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cameraID" Type="Int32" Nullable="false" />
+          <Property Name="imageEncoded" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="timeStreamed" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="userCameraTable" Relationship="Self.FK__cameraStr__camer__4BAC3F29" FromRole="cameraStreamTable" ToRole="userCameraTable" />
+        </EntityType>
+        <EntityType Name="recordPeopleCountTable">
+          <Key>
+            <PropertyRef Name="recordID" />
+          </Key>
+          <Property Name="recordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="locationID" Type="Int32" Nullable="false" />
+          <Property Name="PeopleCount" Type="Int32" Nullable="false" />
+          <Property Name="timeRecorded" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="userLocationSurveillanceTable" Relationship="Self.FK__recordPeo__locat__52593CB8" FromRole="recordPeopleCountTable" ToRole="userLocationSurveillanceTable" />
+        </EntityType>
+        <EntityType Name="resetPasswordTable">
+          <Key>
+            <PropertyRef Name="resetRequestID" />
+          </Key>
+          <Property Name="resetRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="resetCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dateTimeRequested" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="userTable" Relationship="Self.FK__resetPass__userI__403A8C7D" FromRole="resetPasswordTable" ToRole="userTable" />
+        </EntityType>
+        <EntityType Name="tempUserTable">
+          <Key>
+            <PropertyRef Name="registrationID" />
+          </Key>
+          <Property Name="registrationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="validationCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="submittedTime" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="userCameraTable">
+          <Key>
+            <PropertyRef Name="cameraID" />
+          </Key>
+          <Property Name="cameraID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cameraName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cameraDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="locationID" Type="Int32" Nullable="false" />
+          <Property Name="cameraCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="operationStatus" Type="Int32" Nullable="false" />
+          <Property Name="operatingStatus" Type="Int32" Nullable="false" />
+          <Property Name="streamStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cameraMarksCoordinates" Relationship="Self.FK__cameraMar__camer__571DF1D5" FromRole="userCameraTable" ToRole="cameraMarksCoordinates" />
+          <NavigationProperty Name="cameraStreamTables" Relationship="Self.FK__cameraStr__camer__4BAC3F29" FromRole="userCameraTable" ToRole="cameraStreamTable" />
+          <NavigationProperty Name="userLocationSurveillanceTable" Relationship="Self.FK__userCamer__locat__46E78A0C" FromRole="userCameraTable" ToRole="userLocationSurveillanceTable" />
+          <NavigationProperty Name="webStreamSignalTables" Relationship="Self.FK__webStream__camer__4E88ABD4" FromRole="userCameraTable" ToRole="webStreamSignalTable" />
+        </EntityType>
+        <EntityType Name="userLocationSurveillanceTable">
+          <Key>
+            <PropertyRef Name="locationID" />
+          </Key>
+          <Property Name="locationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="locationName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="locationDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="recordPeopleCountTables" Relationship="Self.FK__recordPeo__locat__52593CB8" FromRole="userLocationSurveillanceTable" ToRole="recordPeopleCountTable" />
+          <NavigationProperty Name="userCameraTables" Relationship="Self.FK__userCamer__locat__46E78A0C" FromRole="userLocationSurveillanceTable" ToRole="userCameraTable" />
+          <NavigationProperty Name="userTable" Relationship="Self.FK__userLocat__userI__440B1D61" FromRole="userLocationSurveillanceTable" ToRole="userTable" />
+          <Property Name="CurrentPeopleCount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userTable">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="authenticateLoginTables" Relationship="Self.FK__authentic__userI__3C69FB99" FromRole="userTable" ToRole="authenticateLoginTable" />
+          <NavigationProperty Name="resetPasswordTables" Relationship="Self.FK__resetPass__userI__403A8C7D" FromRole="userTable" ToRole="resetPasswordTable" />
+          <NavigationProperty Name="userLocationSurveillanceTables" Relationship="Self.FK__userLocat__userI__440B1D61" FromRole="userTable" ToRole="userLocationSurveillanceTable" />
+        </EntityType>
+        <EntityType Name="webStreamSignalTable">
+          <Key>
+            <PropertyRef Name="signalID" />
+          </Key>
+          <Property Name="signalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cameraID" Type="Int32" Nullable="false" />
+          <Property Name="timeSignaled" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="userCameraTable" Relationship="Self.FK__webStream__camer__4E88ABD4" FromRole="webStreamSignalTable" ToRole="userCameraTable" />
+        </EntityType>
+        <Association Name="FK__authentic__userI__3C69FB99">
+          <End Role="userTable" Type="Self.userTable" Multiplicity="1" />
+          <End Role="authenticateLoginTable" Type="Self.authenticateLoginTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="authenticateLoginTable">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cameraMar__camer__571DF1D5">
+          <End Role="userCameraTable" Type="Self.userCameraTable" Multiplicity="1" />
+          <End Role="cameraMarksCoordinates" Type="Self.cameraMarksCoordinate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userCameraTable">
+              <PropertyRef Name="cameraID" />
+            </Principal>
+            <Dependent Role="cameraMarksCoordinates">
+              <PropertyRef Name="cameraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cameraStr__camer__4BAC3F29">
+          <End Role="userCameraTable" Type="Self.userCameraTable" Multiplicity="1" />
+          <End Role="cameraStreamTable" Type="Self.cameraStreamTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userCameraTable">
+              <PropertyRef Name="cameraID" />
+            </Principal>
+            <Dependent Role="cameraStreamTable">
+              <PropertyRef Name="cameraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__recordPeo__locat__52593CB8">
+          <End Role="userLocationSurveillanceTable" Type="Self.userLocationSurveillanceTable" Multiplicity="1" />
+          <End Role="recordPeopleCountTable" Type="Self.recordPeopleCountTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userLocationSurveillanceTable">
+              <PropertyRef Name="locationID" />
+            </Principal>
+            <Dependent Role="recordPeopleCountTable">
+              <PropertyRef Name="locationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__resetPass__userI__403A8C7D">
+          <End Role="userTable" Type="Self.userTable" Multiplicity="1" />
+          <End Role="resetPasswordTable" Type="Self.resetPasswordTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="resetPasswordTable">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__userCamer__locat__46E78A0C">
+          <End Role="userLocationSurveillanceTable" Type="Self.userLocationSurveillanceTable" Multiplicity="1" />
+          <End Role="userCameraTable" Type="Self.userCameraTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userLocationSurveillanceTable">
+              <PropertyRef Name="locationID" />
+            </Principal>
+            <Dependent Role="userCameraTable">
+              <PropertyRef Name="locationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__webStream__camer__4E88ABD4">
+          <End Role="userCameraTable" Type="Self.userCameraTable" Multiplicity="1" />
+          <End Role="webStreamSignalTable" Type="Self.webStreamSignalTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userCameraTable">
+              <PropertyRef Name="cameraID" />
+            </Principal>
+            <Dependent Role="webStreamSignalTable">
+              <PropertyRef Name="cameraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__userLocat__userI__440B1D61">
+          <End Role="userTable" Type="Self.userTable" Multiplicity="1" />
+          <End Role="userLocationSurveillanceTable" Type="Self.userLocationSurveillanceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userLocationSurveillanceTable">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_1919280_crowdspotdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="authenticateLoginTables" EntityType="Self.authenticateLoginTable" />
+          <EntitySet Name="cameraMarksCoordinates" EntityType="Self.cameraMarksCoordinate" />
+          <EntitySet Name="cameraStreamTables" EntityType="Self.cameraStreamTable" />
+          <EntitySet Name="recordPeopleCountTables" EntityType="Self.recordPeopleCountTable" />
+          <EntitySet Name="resetPasswordTables" EntityType="Self.resetPasswordTable" />
+          <EntitySet Name="tempUserTables" EntityType="Self.tempUserTable" />
+          <EntitySet Name="userCameraTables" EntityType="Self.userCameraTable" />
+          <EntitySet Name="userLocationSurveillanceTables" EntityType="Self.userLocationSurveillanceTable" />
+          <EntitySet Name="userTables" EntityType="Self.userTable" />
+          <EntitySet Name="webStreamSignalTables" EntityType="Self.webStreamSignalTable" />
+          <AssociationSet Name="FK__authentic__userI__3C69FB99" Association="Self.FK__authentic__userI__3C69FB99">
+            <End Role="userTable" EntitySet="userTables" />
+            <End Role="authenticateLoginTable" EntitySet="authenticateLoginTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cameraMar__camer__571DF1D5" Association="Self.FK__cameraMar__camer__571DF1D5">
+            <End Role="userCameraTable" EntitySet="userCameraTables" />
+            <End Role="cameraMarksCoordinates" EntitySet="cameraMarksCoordinates" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cameraStr__camer__4BAC3F29" Association="Self.FK__cameraStr__camer__4BAC3F29">
+            <End Role="userCameraTable" EntitySet="userCameraTables" />
+            <End Role="cameraStreamTable" EntitySet="cameraStreamTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__recordPeo__locat__52593CB8" Association="Self.FK__recordPeo__locat__52593CB8">
+            <End Role="userLocationSurveillanceTable" EntitySet="userLocationSurveillanceTables" />
+            <End Role="recordPeopleCountTable" EntitySet="recordPeopleCountTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__resetPass__userI__403A8C7D" Association="Self.FK__resetPass__userI__403A8C7D">
+            <End Role="userTable" EntitySet="userTables" />
+            <End Role="resetPasswordTable" EntitySet="resetPasswordTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__userCamer__locat__46E78A0C" Association="Self.FK__userCamer__locat__46E78A0C">
+            <End Role="userLocationSurveillanceTable" EntitySet="userLocationSurveillanceTables" />
+            <End Role="userCameraTable" EntitySet="userCameraTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__webStream__camer__4E88ABD4" Association="Self.FK__webStream__camer__4E88ABD4">
+            <End Role="userCameraTable" EntitySet="userCameraTables" />
+            <End Role="webStreamSignalTable" EntitySet="webStreamSignalTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__userLocat__userI__440B1D61" Association="Self.FK__userLocat__userI__440B1D61">
+            <End Role="userTable" EntitySet="userTables" />
+            <End Role="userLocationSurveillanceTable" EntitySet="userLocationSurveillanceTables" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_1919280_crowdspotdbModelStoreContainer" CdmEntityContainer="db_1919280_crowdspotdbEntities">
+          <EntitySetMapping Name="authenticateLoginTables">
+            <EntityTypeMapping TypeName="db_1919280_crowdspotdbModel.authenticateLoginTable">
+              <MappingFragment StoreEntitySet="authenticateLoginTable">
+                <ScalarProperty Name="authenticationID" ColumnName="authenticationID" />
+                <ScalarProperty Name="authenticationCode" ColumnName="authenticationCode" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="dateAuthenticated" ColumnName="dateAuthenticated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cameraMarksCoordinates">
+            <EntityTypeMapping TypeName="db_1919280_crowdspotdbModel.cameraMarksCoordinate">
+              <MappingFragment StoreEntitySet="cameraMarksCoordinates">
+                <ScalarProperty Name="cordID" ColumnName="cordID" />
+                <ScalarProperty Name="cameraID" ColumnName="cameraID" />
+                <ScalarProperty Name="cordXStart" ColumnName="cordXStart" />
+                <ScalarProperty Name="cordYStart" ColumnName="cordYStart" />
+                <ScalarProperty Name="cordXEnd" ColumnName="cordXEnd" />
+                <ScalarProperty Name="cordYEnd" ColumnName="cordYEnd" />
+                <ScalarProperty Name="markType" ColumnName="markType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cameraStreamTables">
+            <EntityTypeMapping TypeName="db_1919280_crowdspotdbModel.cameraStreamTable">
+              <MappingFragment StoreEntitySet="cameraStreamTable">
+                <ScalarProperty Name="cameraStreamImageID" ColumnName="cameraStreamImageID" />
+                <ScalarProperty Name="cameraID" ColumnName="cameraID" />
+                <ScalarProperty Name="imageEncoded" ColumnName="imageEncoded" />
+                <ScalarProperty Name="timeStreamed" ColumnName="timeStreamed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recordPeopleCountTables">
+            <EntityTypeMapping TypeName="db_1919280_crowdspotdbModel.recordPeopleCountTable">
+              <MappingFragment StoreEntitySet="recordPeopleCountTable">
+                <ScalarProperty Name="recordID" ColumnName="recordID" />
+                <ScalarProperty Name="locationID" ColumnName="locationID" />
+                <ScalarProperty Name="PeopleCount" ColumnName="PeopleCount" />
+                <ScalarProperty Name="timeRecorded" ColumnName="timeRecorded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resetPasswordTables">
+            <EntityTypeMapping TypeName="db_1919280_crowdspotdbModel.resetPasswordTable">
+              <MappingFragment StoreEntitySet="resetPasswordTable">
+                <ScalarProperty Name="resetRequestID" ColumnName="resetRequestID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="resetCode" ColumnName="resetCode" />
+                <ScalarProperty Name="dateTimeRequested" ColumnName="dateTimeRequested" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tempUserTables">
+            <EntityTypeMapping TypeName="db_1919280_crowdspotdbModel.tempUserTable">
+              <MappingFragment StoreEntitySet="tempUserTable">
+                <ScalarProperty Name="registrationID" ColumnName="registrationID" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="validationCode" ColumnName="validationCode" />
+                <ScalarProperty Name="submittedTime" ColumnName="submittedTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userCameraTables">
+            <EntityTypeMapping TypeName="db_1919280_crowdspotdbModel.userCameraTable">
+              <MappingFragment StoreEntitySet="userCameraTable">
+                <ScalarProperty Name="cameraID" ColumnName="cameraID" />
+                <ScalarProperty Name="cameraName" ColumnName="cameraName" />
+                <ScalarProperty Name="cameraDescription" ColumnName="cameraDescription" />
+                <ScalarProperty Name="locationID" ColumnName="locationID" />
+                <ScalarProperty Name="cameraCode" ColumnName="cameraCode" />
+                <ScalarProperty Name="operationStatus" ColumnName="operationStatus" />
+                <ScalarProperty Name="operatingStatus" ColumnName="operatingStatus" />
+                <ScalarProperty Name="streamStatus" ColumnName="streamStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userLocationSurveillanceTables">
+            <EntityTypeMapping TypeName="db_1919280_crowdspotdbModel.userLocationSurveillanceTable">
+              <MappingFragment StoreEntitySet="userLocationSurveillanceTable">
+                <ScalarProperty Name="CurrentPeopleCount" ColumnName="CurrentPeopleCount" />
+                <ScalarProperty Name="locationID" ColumnName="locationID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="locationName" ColumnName="locationName" />
+                <ScalarProperty Name="locationDescription" ColumnName="locationDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userTables">
+            <EntityTypeMapping TypeName="db_1919280_crowdspotdbModel.userTable">
+              <MappingFragment StoreEntitySet="userTable">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webStreamSignalTables">
+            <EntityTypeMapping TypeName="db_1919280_crowdspotdbModel.webStreamSignalTable">
+              <MappingFragment StoreEntitySet="webStreamSignalTable">
+                <ScalarProperty Name="signalID" ColumnName="signalID" />
+                <ScalarProperty Name="cameraID" ColumnName="cameraID" />
+                <ScalarProperty Name="timeSignaled" ColumnName="timeSignaled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

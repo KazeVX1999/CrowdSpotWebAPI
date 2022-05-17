@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="99ef11cd193f4b11b17fc969bb6fd1a7" Name="Diagram1">
+        <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.authenticateLoginTable" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.cameraMarksCoordinate" Width="1.5" PointX="7.5" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.cameraStreamTable" Width="1.5" PointX="7.5" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.recordPeopleCountTable" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.resetPasswordTable" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.tempUserTable" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.userCameraTable" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.userLocationSurveillanceTable" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.userTable" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.webStreamSignalTable" Width="1.5" PointX="7.5" PointY="15.875" IsExpanded="true" />
+        <AssociationConnector Association="db_1919280_crowdspotdbModel.FK__authentic__userI__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="db_1919280_crowdspotdbModel.FK__cameraMar__camer__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="db_1919280_crowdspotdbModel.FK__cameraStr__camer__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="db_1919280_crowdspotdbModel.FK__recordPeo__locat__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="db_1919280_crowdspotdbModel.FK__resetPass__userI__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="db_1919280_crowdspotdbModel.FK__userCamer__locat__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="db_1919280_crowdspotdbModel.FK__webStream__camer__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="db_1919280_crowdspotdbModel.FK__userLocat__userI__440B1D61" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
