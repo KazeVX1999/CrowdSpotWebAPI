@@ -1354,9 +1354,9 @@ namespace CrowdSpotWebAPI.Controllers
                     else
                     {
                         int currentCount;
+                        recordPeopleCountTable[] thelatest = theEntity.recordPeopleCountTables.Where(record => record.locationID == theCamera.locationID).OrderByDescending(rec => rec.timeRecorded).ToArray();
 
-                        var thelatest = theEntity.Database.SqlQuery<recordPeopleCountTable>("select * from recordPeopleCountTable where locationID='" + theLocation.locationID + "' ORDER BY  timeRecorded DESC").ToArray();
-                        if (thelatest != null)
+                        if (thelatest.Length != 0)
                         {
                             // Code adapted from net-informations.com, n.d.
                             DateTime day = Convert.ToDateTime(thelatest[0].timeRecorded);
