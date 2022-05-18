@@ -747,17 +747,48 @@ namespace CrowdSpotWebAPI.Controllers
                     return Content(HttpStatusCode.NotFound, "- Surveillance Location Not Found -");
                 }
 
+                
+
                 // Delete The Cameras First
                 userCameraTable[] cameras = theEntity.userCameraTables.Where(camera => camera.locationID == locationID).ToArray();
                 for (int i = 0; i < cameras.Length; i++)
                 {
-                    theEntity.userCameraTables.Remove(cameras[i]);
-                    theEntity.SaveChanges();
+                    // Delete Other Cameras Childs First
+                    var camID = cameras[i].cameraID;
+                    cameraMarksCoordinate[] marks = theEntity.cameraMarksCoordinates.Where(mark => mark.cameraID == camID).ToArray();
+                    if (marks.Length != 0)
+                    {
+                        theEntity.cameraMarksCoordinates.RemoveRange(marks);
+                        theEntity.SaveChanges();
+                    }
+
+                    webStreamSignalTable stream = theEntity.webStreamSignalTables.FirstOrDefault(str => str.cameraID == camID);
+                    if (stream != null)
+                    {
+                        theEntity.webStreamSignalTables.Remove(stream);
+                        theEntity.SaveChanges();
+                    }
+
+
+                    cameraStreamTable stream2 = theEntity.cameraStreamTables.FirstOrDefault(str => str.cameraID == camID);
+                    if (stream2 != null)
+                    {
+                        theEntity.cameraStreamTables.Remove(stream2);
+                        theEntity.SaveChanges();
+                    }
                 }
+
+                theEntity.userCameraTables.RemoveRange(cameras);
+                theEntity.SaveChanges();
+
+
+                // Delete recordPeopleCountTable
+                recordPeopleCountTable[] records = theEntity.recordPeopleCountTables.Where(rec => rec.locationID == locationID).ToArray();
+                theEntity.recordPeopleCountTables.RemoveRange(records);
 
                 // Then Delete the Location
                 string outputSTR = theLocation.locationName;
-                theEntity.userLocationSurveillanceTables.Remove(theEntity.userLocationSurveillanceTables.Find(locationID));
+                theEntity.userLocationSurveillanceTables.Remove(theLocation);
                 theEntity.SaveChanges();
                 return Ok(outputSTR);               
 

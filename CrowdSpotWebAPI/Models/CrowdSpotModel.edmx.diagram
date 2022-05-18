@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="99ef11cd193f4b11b17fc969bb6fd1a7" Name="Diagram1">
+      <Diagram DiagramId="99ef11cd193f4b11b17fc969bb6fd1a7" Name="Diagram1" ZoomLevel="111">
         <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.authenticateLoginTable" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.cameraMarksCoordinate" Width="1.5" PointX="7.5" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="db_1919280_crowdspotdbModel.cameraStreamTable" Width="1.5" PointX="7.5" PointY="13.125" IsExpanded="true" />
