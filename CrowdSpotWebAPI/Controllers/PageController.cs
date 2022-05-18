@@ -152,31 +152,29 @@ namespace CrowdSpotWebAPI.Controllers
                     // After added temporary, Send email to user along with the validation key.
                     MimeMessage theMessage = new MimeMessage();
 
-                    // Admin
-                    MailboxAddress fromSender = new MailboxAddress("CrowdSpot", "crowdspotauto@gmail.com");
-                    theMessage.From.Add(fromSender);
+                    MailMessage mail = new MailMessage();
 
-                    // User
-                    MailboxAddress toUser = new MailboxAddress("User", inputUserEmail);
-                    theMessage.To.Add(toUser);
-                    theMessage.Subject = "Validating Registeration";
+                    mail.From = new MailAddress("crowdspotauto@gmail.com");
+                    mail.To.Add(inputUserEmail);
+                    mail.Subject = "Validating Registeration";
+                    mail.Body = "<h3>This is an automated message please don't reply to this email address.</h3><h3>Thank you for choosing CrowdSpot. To finish your Sign Up, please enter the code from below to our page.</h3><h1 style=\"text-align: center\">" + validationCodeGenerated + "</h1><h3>If you wish to ask for help or have any enquiry, please do message us at: CrowdSpotWHW@gmail.com</h3>"; 
+                    mail.IsBodyHtml = true;
 
-
-                    // Mail Body
-                    BodyBuilder theBody = new BodyBuilder();
-                    theBody.HtmlBody = "<h3>This is an automated message please don't reply to this email address.</h3><h3>Thank you for choosing CrowdSpot. To finish your Sign Up, please enter the code from below to our page.</h3><h1 style=\"text-align: center\">" + validationCodeGenerated + "</h1><h3>If you wish to ask for help or have any enquiry, please do message us at: CrowdSpotWHW@gmail.com</h3>";
-                    theMessage.Body = theBody.ToMessageBody();
-
-                    // Client Server
-                    MailKit.Net.Smtp.SmtpClient theClient = new MailKit.Net.Smtp.SmtpClient();
-                    theClient.Connect("smtp.gmail.com", 587, SecureSocketOptions.Auto);
-                    theClient.Authenticate("crowdspotauto@gmail.com", "935AB56c79!");
-
-
-                    // Send Email
-                    theClient.Send(theMessage);
-                    theClient.Disconnect(true);
-                    theClient.Dispose();
+                    try
+                    {
+                        using (System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587))
+                        {
+                            smtp.UseDefaultCredentials = false;
+                            smtp.Credentials = new NetworkCredential("crowdspotauto@gmail.com", "935AB56c79!");
+                            smtp.EnableSsl = true;
+                            smtp.Send(mail);
+                            smtp.Dispose();
+                        }
+                    }
+                    catch
+                    {
+                        return Content(HttpStatusCode.NotFound, "- SMTP Failed -");
+                    }
 
 
                 } catch (Exception)
@@ -227,34 +225,30 @@ namespace CrowdSpotWebAPI.Controllers
 
                 try
                 {
-                    // After added temporary, Send email to user along with the validation key.
-                    MimeMessage theMessage = new MimeMessage();
 
-                    // Admin
-                    MailboxAddress fromSender = new MailboxAddress("CrowdSpot", "crowdspotauto@gmail.com");
-                    theMessage.From.Add(fromSender);
+                    MailMessage mail = new MailMessage();
 
-                    // User
-                    MailboxAddress toUser = new MailboxAddress("User", inputUserEmail);
-                    theMessage.To.Add(toUser);
-                    theMessage.Subject = "Validating Registeration";
+                    mail.From = new MailAddress("crowdspotauto@gmail.com");
+                    mail.To.Add(inputUserEmail);
+                    mail.Subject = "Validating Registeration";
+                    mail.Body = "<h3>This is an automated message please don't reply to this email address.</h3><h3>Thank you for choosing CrowdSpot. To finish your Sign Up, please enter the code from below to our page.</h3><h1 style=\"text-align: center\">" + validationCodeGenerated + "</h1><h3>If you wish to ask for help or have any enquiry, please do message us at: CrowdSpotWHW@gmail.com</h3>";
+                    mail.IsBodyHtml = true;
 
-
-                    // Mail Body
-                    BodyBuilder theBody = new BodyBuilder();
-                    theBody.HtmlBody = "<h3>This is an automated message please don't reply to this email address.</h3><h3>Thank you for choosing CrowdSpot. To finish your Sign Up, please enter the code from below to our page.</h3><h1 style=\"text-align: center\">" + validationCodeGenerated + "</h1><h3>If you wish to ask for help or have any enquiry, please do message us at: CrowdSpotWHW@gmail.com</h3>";
-                    theMessage.Body = theBody.ToMessageBody();
-
-                    // Client Server
-                    MailKit.Net.Smtp.SmtpClient theClient = new MailKit.Net.Smtp.SmtpClient();
-                    theClient.Connect("smtp.gmail.com", 587, SecureSocketOptions.Auto);
-                    theClient.Authenticate("crowdspotauto@gmail.com", "935AB56c79!");
-
-
-                    // Send Email
-                    theClient.Send(theMessage);
-                    theClient.Disconnect(true);
-                    theClient.Dispose();
+                    try
+                    {
+                        using (System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587))
+                        {
+                            smtp.UseDefaultCredentials = false;
+                            smtp.Credentials = new NetworkCredential("crowdspotauto@gmail.com", "935AB56c79!");
+                            smtp.EnableSsl = true;
+                            smtp.Send(mail);
+                            smtp.Dispose();
+                        }
+                    }
+                    catch
+                    {
+                        return Content(HttpStatusCode.NotFound, "- SMTP Failed -");
+                    }
 
 
                 }
@@ -355,34 +349,30 @@ namespace CrowdSpotWebAPI.Controllers
 
                 try
                 {
-                    // After added temporary, Send email to user along with the validation key.
-                    MimeMessage theMessage = new MimeMessage();
+                    // Send email to user along with the validation key.
+                    MailMessage mail = new MailMessage();
 
-                    // Admin
-                    MailboxAddress fromSender = new MailboxAddress("CrowdSpot", "crowdspotauto@gmail.com");
-                    theMessage.From.Add(fromSender);
+                    mail.From = new MailAddress("crowdspotauto@gmail.com");
+                    mail.To.Add(inputUserEmail);
+                    mail.Subject = "Resetting Password";
+                    mail.Body = "<h3>This is an automated message please don' reply to this email address.</h3><h3>Dear User, you have requested for resetting your account's password. Here is your code for validation to ensure that this is you.</h3><h1 style=\"text-align: center\">" + validationCodeGenerated + "</h1><h3>If you wish to ask for help or have any enquiry, please do message us at: CrowdSpotWHW@gmail.com</h3>";
+                    mail.IsBodyHtml = true;
 
-                    // User
-                    MailboxAddress toUser = new MailboxAddress("User", inputUserEmail);
-                    theMessage.To.Add(toUser);
-                    theMessage.Subject = "Resetting Password";
-
-
-                    // Mail Body
-                    BodyBuilder theBody = new BodyBuilder();
-                    theBody.HtmlBody = "<h3>This is an automated message please don' reply to this email address.</h3><h3>Dear User, you have requested for resetting your account's password. Here is your code for validation to ensure that this is you.</h3><h1 style=\"text-align: center\">" + validationCodeGenerated + "</h1><h3>If you wish to ask for help or have any enquiry, please do message us at: CrowdSpotWHW@gmail.com</h3>";
-                    theMessage.Body = theBody.ToMessageBody();
-
-                    // Client Server
-                    MailKit.Net.Smtp.SmtpClient theClient = new MailKit.Net.Smtp.SmtpClient();
-                    theClient.Connect("smtp.gmail.com", 587, SecureSocketOptions.Auto);
-                    theClient.Authenticate("crowdspotauto@gmail.com", "935AB56c79!");
-
-
-                    // Send Email
-                    theClient.Send(theMessage);
-                    theClient.Disconnect(true);
-                    theClient.Dispose();
+                    try
+                    {
+                        using (System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587))
+                        {
+                            smtp.UseDefaultCredentials = false;
+                            smtp.Credentials = new NetworkCredential("crowdspotauto@gmail.com", "935AB56c79!");
+                            smtp.EnableSsl = true;
+                            smtp.Send(mail);
+                            smtp.Dispose();
+                        }
+                    }
+                    catch
+                    {
+                        return Content(HttpStatusCode.NotFound, "- SMTP Failed -");
+                    }
 
                     // Remove if exist an old check
                     resetPasswordTable checkOldReset = theEntity.resetPasswordTables.FirstOrDefault(check => check.userID == checkUser.userID);
@@ -472,33 +462,29 @@ namespace CrowdSpotWebAPI.Controllers
                 theEntity.SaveChanges();
 
                 // After added temporary, Send email to user along with the validation key.
-                MimeMessage theMessage = new MimeMessage();
+                MailMessage mail = new MailMessage();
 
-                // Admin
-                MailboxAddress fromSender = new MailboxAddress("CrowdSpot", "crowdspotauto@gmail.com");
-                theMessage.From.Add(fromSender);
+                mail.From = new MailAddress("crowdspotauto@gmail.com");
+                mail.To.Add(inputUserEmail);
+                mail.Subject = "Successfully Reset Password";
+                mail.Body = "<h3>This is an automated message please don't reply to this email address.</h3><h3>Dear User, you have successfully resetting your account's password.</h3><h3>If you wish to ask for help or have any enquiry, please do message us at: CrowdSpotWHW@gmail.com</h3>";
+                mail.IsBodyHtml = true;
 
-                // User
-                MailboxAddress toUser = new MailboxAddress("User", inputUserEmail);
-                theMessage.To.Add(toUser);
-                theMessage.Subject = "Successfully Reset Password";
-
-
-                // Mail Body
-                BodyBuilder theBody = new BodyBuilder();
-                theBody.HtmlBody = "<h3>This is an automated message please don't reply to this email address.</h3><h3>Dear User, you have successfully resetting your account's password.</h3><h3>If you wish to ask for help or have any enquiry, please do message us at: CrowdSpotWHW@gmail.com</h3>";
-                theMessage.Body = theBody.ToMessageBody();
-
-                // Client Server
-                MailKit.Net.Smtp.SmtpClient theClient = new MailKit.Net.Smtp.SmtpClient();
-                theClient.Connect("smtp.gmail.com", 587, SecureSocketOptions.Auto);
-                theClient.Authenticate("crowdspotauto@gmail.com", "935AB56c79!");
-
-
-                // Send Email
-                theClient.Send(theMessage);
-                theClient.Disconnect(true);
-                theClient.Dispose();
+                try
+                {
+                    using (System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new NetworkCredential("crowdspotauto@gmail.com", "935AB56c79!");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                        smtp.Dispose();
+                    }
+                }
+                catch
+                {
+                    return Content(HttpStatusCode.NotFound, "- SMTP Failed -");
+                }
 
                 return Ok("- Reset Password Succeed -");
             }
@@ -514,34 +500,35 @@ namespace CrowdSpotWebAPI.Controllers
         {
             try
             {
-                // After added temporary, Send email to user along with the validation key.
-                MimeMessage theMessage = new MimeMessage();
+               
+                // Code adapted from msu-nasir and eocron (2021).
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress(inputUserEmail);
+                mail.To.Add("crowdspotwhw@gmail.com");
+                mail.Subject = "From: " + inputUserEmail;
+                mail.Body = "<h3>Subject: " + subjectMessage + "</h3><h4>Description: " + textMessage + "</h4>";
+                mail.IsBodyHtml = true;
 
-                // Admin
-                MailboxAddress fromSender = new MailboxAddress("From: " + inputUserEmail, "crowdspotauto@gmail.com");
-                theMessage.From.Add(fromSender);
+                try
+                {
+                    using (System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new NetworkCredential("crowdspotauto@gmail.com", "935AB56c79!");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                        smtp.Dispose();
+                    }
+                }
+                    catch
+                {
+                    return Content(HttpStatusCode.NotFound, "- SMTP Failed -");
+                }
 
-                // User
-                MailboxAddress toUser = new MailboxAddress("Admin", "crowdspotwhw@gmail.com");
-                theMessage.To.Add(toUser);
-                theMessage.Subject = subjectMessage;
-
-
-                // Mail Body
-                BodyBuilder theBody = new BodyBuilder();
-                theBody.HtmlBody = textMessage;
-                theMessage.Body = theBody.ToMessageBody();
-
-                // Client Server
-                MailKit.Net.Smtp.SmtpClient theClient = new MailKit.Net.Smtp.SmtpClient();
-                theClient.Connect("smtp.gmail.com", 587, SecureSocketOptions.Auto);
-                theClient.Authenticate("crowdspotauto@gmail.com", "935AB56c79!");
+                // End of code adapted.
 
 
-                // Send Email
-                theClient.Send(theMessage);
-                theClient.Disconnect(true);
-                theClient.Dispose();
+
 
                 return Ok("- Message Successfully Submitted -");
             }
@@ -580,33 +567,29 @@ namespace CrowdSpotWebAPI.Controllers
 
             try
             {
-                MimeMessage theMessage = new MimeMessage();
+                MailMessage mail = new MailMessage();
 
-                // Admin
-                MailboxAddress fromSender = new MailboxAddress("CrowdSpot", "crowdspotauto@gmail.com");
-                theMessage.From.Add(fromSender);
+                mail.From = new MailAddress("crowdspotauto@gmail.com");
+                mail.To.Add(theUser.userEmail);
+                mail.Subject = "Account Password Changed";
+                mail.Body = "<h3>This is an automated message please don't reply to this email address.</h3><h3>This mail is to tell you that you have been succesfully changed your account's password. If it wasn't you who changed the password, please do contact us at: CrowdSpotWHW@gmail.com</h3>";
+                mail.IsBodyHtml = true;
 
-                // User
-                MailboxAddress toUser = new MailboxAddress("User", theUser.userEmail);
-                theMessage.To.Add(toUser);
-                theMessage.Subject = "Account Password Changed";
-
-
-                // Mail Body
-                BodyBuilder theBody = new BodyBuilder();
-                theBody.HtmlBody = "<h3>This is an automated message please don't reply to this email address.</h3><h3>This mail is to tell you that you have been succesfully changed your account's password. If it wasn't you who changed the password, please do contact us at: CrowdSpotWHW@gmail.com</h3>";
-                theMessage.Body = theBody.ToMessageBody();
-
-                // Client Server
-                MailKit.Net.Smtp.SmtpClient theClient = new MailKit.Net.Smtp.SmtpClient();
-                theClient.Connect("smtp.gmail.com", 587, SecureSocketOptions.Auto);
-                theClient.Authenticate("crowdspotauto@gmail.com", "935AB56c79!");
-
-
-                // Send Email
-                theClient.Send(theMessage);
-                theClient.Disconnect(true);
-                theClient.Dispose();
+                try
+                {
+                    using (System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new NetworkCredential("crowdspotauto@gmail.com", "935AB56c79!");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                        smtp.Dispose();
+                    }
+                }
+                catch
+                {
+                    return Content(HttpStatusCode.NotFound, "- SMTP Failed -");
+                }
             }
             catch
             {
@@ -1137,7 +1120,7 @@ namespace CrowdSpotWebAPI.Controllers
                     System.TimeSpan timeDifference = now.Subtract(signalCheck.timeSignaled);
                     // 2 minutes no update, stop stream
                     // Signal will always be update with real time if they are receiving the stream images.
-                    if (timeDifference.TotalMinutes < 2)
+                    if (timeDifference.TotalMinutes > 2)
                     {
                         userCameraTable theCam = theEntity.userCameraTables.Find(cameraID);
                         theCam.streamStatus = 0;
